@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>2024新年倒數</title>
+  <title>New Year Countdown with Starry Sky</title>
     <style>
             .fireworks-container {
   position: absolute;
@@ -62,14 +62,7 @@
   <link rel="stylesheet" href="StarrySky.css">
 </head>
 <body>
-<audio id="audio" src="https://cdn.discordapp.com/attachments/1147655964653269012/1158347558410797096/5992f0ffff8176e4.wav" preload="auto"></audio>
-<div id="twitch-player" style="display: none; position: fixed; bottom: 20px; left: 20px; z-index: 101;">
-  <iframe src="https://player.twitch.tv/?channel=44yomi44&enableExtensions=true&muted=true&parent=ranke96.github.io&player=popout&quality=chunked&volume=1" frameborder="0" width="480" height="270" style="background-color: transparent;"></iframe>
-</div>
-    
-<div id="chat-widget" style="display: none; position: fixed; bottom: 20px; right: 20px; z-index: 100;">
-  <iframe id="obs-chat-iframe" src="https://nightdev.com/hosted/obschat?theme=undefined&channel=44yomi44&fade=15&bot_activity=false&prevent_clipping=false" frameborder="0" width="300" height="400" style="background-color: transparent;"></iframe>
-</div>
+
 <div id="countdown"></div>
 <div class="fireworks-container"></div>
 
@@ -81,7 +74,7 @@
 <div class="constelacao"></div>
 <div class="lua">
   <div class="textura"></div>
-    <button class="test-button" onclick="startCountdown(); playAudio();"></button>
+    <button class="test-button" onclick="startCountdown()"></button>
 </div>
 <div class="chuvaMeteoro"></div>
 
@@ -163,49 +156,6 @@
     clearInterval(interval); // 清除现有的倒计时
     updateCountdown(); // 立即更新倒计时
     document.getElementById('countdown').style.display = 'none';
-  }
-  let chatVisible = false;
-
-  document.addEventListener('keydown', function(event) {
-    const keyC = 67; // Key code for 'C' key
-
-    if (event.keyCode === keyC) {
-      chatVisible = !chatVisible;
-      const chatWidget = document.getElementById('chat-widget');
-
-      if (chatVisible) {
-        chatWidget.style.display = 'block';
-      } else {
-        chatWidget.style.display = 'none';
-      }
-    }
-  });
-    
-  let codeSequence = '';
-  const konamiCode = '38384040373937396665'; // Up Up Down Down Left Right Left Right B A
-  let playerVisible = false;
-
-  document.addEventListener('keydown', function(event) {
-    codeSequence += event.keyCode;
-
-    if (codeSequence.endsWith(konamiCode)) {
-      playerVisible = !playerVisible;
-      const player = document.getElementById('twitch-player');
-
-      if (playerVisible) {
-        player.style.display = 'block';
-      } else {
-        player.style.display = 'none';
-      }
-
-      codeSequence = '';
-    }
-  });
-    
-    
-  function playAudio() {
-    const audio = document.getElementById('audio');
-    audio.play();
   }
 </script>
 
