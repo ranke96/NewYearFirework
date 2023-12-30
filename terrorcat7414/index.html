@@ -60,6 +60,11 @@
     /* 鼠标悬停时的样式 */
   </style>
   <link rel="stylesheet" href="css/StarrySky.css">
+  <link rel="stylesheet" href="css/snow.css">
+   <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
+   <script src="js/StarrySky.js"></script>
+   <script src="js/switch.js"></script>
+   <script src="js/snow.js"></script>
 </head>
 <body>
 <audio id="audio" src="" preload="auto"></audio>
@@ -71,22 +76,23 @@
   <iframe id="obs-chat-iframe" src="https://nightdev.com/hosted/obschat?theme=undefined&channel=terrorcat7414&fade=15&bot_activity=false&prevent_clipping=false" frameborder="0" width="300" height="400" style="background-color: transparent;"></iframe>
 </div>
 <div id="countdown"></div>
-<div class="fireworks-container"></div>
+<div class="fireworks-container"></div>  
 
-<!-- 引入 Fireworks.js -->
-<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
-<script src="js/StarrySky.js"></script>
-
-<div class="noite"></div>
+<div class="noite"><canvas id="rainCanvas"></canvas></div>
+    
 <div class="constelacao"></div>
 <div class="lua">
   <div class="textura"></div>
+
     <button class="test-button" onclick="startCountdown(); playAudio();"></button>
 </div>
+<div class="snow-container" style="display: none;"></div>
+    
 <div class="chuvaMeteoro"></div>
-  <div class="floresta">
+          <div class="floresta">
     <img src="image/city.png" alt="" />
   </div>
+  <script src="js/rain.js"></script>
 <script>
   // 设置跨年的时间点
 function preloadImages() {
@@ -107,7 +113,7 @@ function preloadImages() {
     img.src = path;
   });
 }
-  const newYearTime = new Date('January 1, 2024 00:00:00').getTime();
+  const newYearTime = new Date('December 31, 2023 05:23:59').getTime();
 
   // 更新倒计时和特殊效果
   const updateCountdown = () => {
@@ -145,10 +151,10 @@ function preloadImages() {
       
  if (distance <= 1000) { // 少於等於1秒時隱藏文字
     countdown.style.display = 'none';
-  } else if (distance <= 10000) {
-    countdown.style.fontSize = '48px';
+  } else if (distance <= 11000) {
+    countdown.style.fontSize = '100px';
   } else {
-    countdown.style.fontSize = '24px';
+    countdown.style.fontSize = '48px';
   }
   };
 
@@ -328,42 +334,6 @@ window.addEventListener('load', () => {
     document.getElementById('countdown').style.display = 'none';
   }
   let chatVisible = false;
-
-  document.addEventListener('keydown', function(event) {
-    const keyC = 67; // Key code for 'C' key
-
-    if (event.keyCode === keyC) {
-      chatVisible = !chatVisible;
-      const chatWidget = document.getElementById('chat-widget');
-
-      if (chatVisible) {
-        chatWidget.style.display = 'block';
-      } else {
-        chatWidget.style.display = 'none';
-      }
-    }
-  });
-    
-  let codeSequence = '';
-  const konamiCode = '38384040373937396665'; // Up Up Down Down Left Right Left Right B A
-  let playerVisible = false;
-
-  document.addEventListener('keydown', function(event) {
-    codeSequence += event.keyCode;
-
-    if (codeSequence.endsWith(konamiCode)) {
-      playerVisible = !playerVisible;
-      const player = document.getElementById('twitch-player');
-
-      if (playerVisible) {
-        player.style.display = 'block';
-      } else {
-        player.style.display = 'none';
-      }
-
-      codeSequence = '';
-    }
-  });
     
     
   function playAudio() {

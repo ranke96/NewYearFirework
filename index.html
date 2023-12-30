@@ -60,29 +60,36 @@
     /* 鼠标悬停时的样式 */
   </style>
   <link rel="stylesheet" href="css/StarrySky.css">
+  <link rel="stylesheet" href="css/snow.css">
+   <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
+   <script src="js/StarrySky.js"></script>
+   <script src="js/switch.js"></script>
+   <script src="js/snow.js"></script>
+
 </head>
 <body>
-
 <div id="countdown"></div>
-<div class="fireworks-container"></div>
+<div class="fireworks-container"></div>  
 
-<!-- 引入 Fireworks.js -->
-<script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
-<script src="js/StarrySky.js"></script>
-
-<div class="noite"></div>
+<div class="noite"><canvas id="rainCanvas"></canvas></div>
+    
 <div class="constelacao"></div>
 <div class="lua">
   <div class="textura"></div>
-    <button class="test-button" onclick="startCountdown()"></button>
+
+    <button class="test-button" onclick="startCountdown(); playAudio();"></button>
 </div>
+<div class="snow-container" style="display: none;"></div>
+    
 <div class="chuvaMeteoro"></div>
-  <div class="floresta">
+      <div class="floresta">
     <img src="image/city.png" alt="" />
   </div>
+  <script src="js/rain.js"></script>
 <script>
   // 设置跨年的时间点
   const newYearTime = new Date('January 1, 2024 00:00:00').getTime();
+    //'January 1, 2024 00:00:00'
 //'December 31, 2023 23:59:59'
   // 更新倒计时和特殊效果
   const updateCountdown = () => {
@@ -117,10 +124,10 @@
 
     countdown.innerHTML = `${countdownText}`;
       
-    if (distance <= 10000) {
-      countdown.style.fontSize = '48px';
+    if (distance <= 11000) {
+      countdown.style.fontSize = '100px';
     } else {
-      countdown.style.fontSize = '24px';
+      countdown.style.fontSize = '48px';
     }
   };
 
