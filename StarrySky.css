@@ -21,15 +21,6 @@ html, body {
   font-family: 'Pacifico', cursive;
 }
 
-.title .avatar {
-  width: 40px;
-  height: 40px;
-  background-image: url(../img/avatar.jpg);
-  display: inline-block;
-  border-radius: 50%;
-  background-size: 100%;
-}
-
 .noite {
   background: -webkit-linear-gradient(top, rgb(0, 0, 0) 50%, rgb(25, 19, 39)80%, rgb(43, 32, 72));
   width: 100%;
@@ -135,6 +126,7 @@ html, body {
   left: 0;
   bottom: 0;
   width: 100%;
+ z-index: 9999; /* 最上層 */
 }
 
 .floresta img {
@@ -142,6 +134,7 @@ html, body {
   position: absolute;
   bottom: 0;
   left: 0;
+  z-index: 9999; /* 最上層 */
 }
 
 @keyframes escurecer {
