@@ -87,18 +87,37 @@
 
 <script>
   // 设置跨年的时间点
-  const newYearTime = new Date('December 31, 2023 23:59:59').getTime();
+function preloadImages() {
+  const imagePaths = [
+    'image/image0.png',
+    'image/image1.png',
+    'image/image2.png',
+    'image/image3.png',
+    'image/image4.png',
+    'image/image5.png',
+    'image/image6.png',
+    'image/image7.png',
+    'image/image8.png'
+  ];
+
+  imagePaths.forEach(path => {
+    const img = new Image();
+    img.src = path;
+  });
+}
+  const newYearTime = new Date('December 30, 2023 19:23:50').getTime();
 
   // 更新倒计时和特殊效果
   const updateCountdown = () => {
     const now = new Date().getTime();
     const distance = newYearTime - now;
 
-    if (distance < 0) {
+    if (distance < 1) {
       clearInterval(interval);
       countdown.style.display = 'none';
-      startFireworks();
       displayHappyNewYearMessage();
+      displayImages();
+      startFireworks();
       return;
     }
 
@@ -122,43 +141,185 @@
 
     countdown.innerHTML = `${countdownText}`;
       
-    if (distance <= 10000) {
-      countdown.style.fontSize = '48px';
-    } else {
-      countdown.style.fontSize = '24px';
-    }
+ if (distance <= 1000) { // 少於等於1秒時隱藏文字
+    countdown.style.display = 'none';
+  } else if (distance <= 10000) {
+    countdown.style.fontSize = '48px';
+  } else {
+    countdown.style.fontSize = '24px';
+  }
   };
 
-  function displayHappyNewYearMessage() {
-    const happyNewYearMessage = document.createElement('div');
-    happyNewYearMessage.textContent = '2024新年快樂';
-    happyNewYearMessage.className = 'new-year-message';
-    document.body.appendChild(happyNewYearMessage);
 
-    setTimeout(() => {
-      happyNewYearMessage.style.opacity = '1';
-      happyNewYearMessage.style.fontSize = '72px';
-    }, 10);
+// 在頁面載入時進行圖片預加載
+function displayImages() {
+  const imagePaths = [
+    'image/image0.png',
+    'image/image1.png',
+    'image/image2.png',
+    'image/image3.png',
+    'image/image4.png',
+    'image/image5.png',
+    'image/image6.png',
+    'image/image7.png',
+    'image/image8.png'
+  ];
+ const imageWidths = [
+    '250px', // image0.png 的宽度
+    '350px', // image1.png 的宽度
+    '200px', // image2.png 的宽度
+    '220px', // image3.png 的宽度
+    '250px', // image4.png 的宽度
+    '250px', // image5.png 的宽度
+    '220px', // image6.png 的宽度
+    '230px', // image7.png 的宽度
+    '220px'  // image8.png 的宽度
+  ];
+    
+  const imageElements = imagePaths.map((path, index) => {
+    const img = document.createElement('img');
+    img.src = path;
+    img.style.position = 'absolute';
+    img.style.width = imageWidths[index];
 
-    setTimeout(() => {
-      happyNewYearMessage.style.opacity = '0';
-    }, 2000);
+    // 保持原始圖片比例
+    const imgLoader = new Image();
+    imgLoader.src = path;
+    imgLoader.onload = function() {
+      const aspectRatio = imgLoader.width / imgLoader.height;
+      const height = parseInt(img.style.width) / aspectRatio; // 根據寬度計算高度
+      img.style.height = `${height}px`; // 設定高度
+    };
 
-    setTimeout(() => {
-      happyNewYearMessage.style.display = 'none';
-    }, 3000);
-  }
+    img.style.transition = 'opacity 2s'; // 淡出效果
+    img.style.opacity = '0'; // 起始透明度為0
 
+    // 設定圖層堆疊順序
+if (index === 4) { // image4.png 的索引是4
+  img.style.zIndex = '3'; // 将 z-index 设置为比 image5.png 更高的值
+}
+if (index === 5) { // image5.png 的索引是5
+  img.style.zIndex = '2'; // 将 z-index 设置为一个较低的值
+}
+
+
+    document.body.appendChild(img);
+    return img;
+  });
+
+  // 在3秒後將圖片淡出
+  setTimeout(() => {
+    imageElements.forEach((img, index) => {
+      setTimeout(() => {
+        img.style.opacity = '0';
+      }, index * 300); // 依次淡出，每隔300毫秒
+    });
+  }, 3000);
+
+  // 設置圖片位置，使其從中心擴散出去
+  imageElements.forEach((img, index) => {
+    const angle = ((index - 1.2) / imagePaths.length) * Math.PI * 2;
+const radius = 300; // 调整半径
+const x = window.innerWidth / 2 + radius * Math.cos(angle) - img.width / 2;
+const y = window.innerHeight / 2 + radius * Math.sin(angle) - img.height / 2;
+img.style.left = `${x}px`;
+img.style.top = `${y}px`;
+img.style.opacity = '1'; // 显示图片
+
+  });
+}
+function displayHappyNewYearMessage() {
+  const happyNewYearMessage = document.createElement('div');
+  happyNewYearMessage.textContent = '2024新年快樂';
+  happyNewYearMessage.className = 'new-year-message';
+  document.body.appendChild(happyNewYearMessage);
+
+  setTimeout(() => {
+    happyNewYearMessage.style.opacity = '1';
+    happyNewYearMessage.style.fontSize = '72px';
+  }, 10);
+
+  setTimeout(() => {
+    happyNewYearMessage.style.opacity = '0';
+  }, 2000);
+
+  setTimeout(() => {
+    happyNewYearMessage.style.display = 'none';
+  }, 3000);
+}
+window.addEventListener('load', () => {
+  preloadImages();
+});
   const interval = setInterval(updateCountdown, 1000);
 
   // 在特定時間啟動煙火效果
   function startFireworks() {
-    const container = document.querySelector('.fireworks-container');
-    const fireworks = new Fireworks.default(container);
+  const container = document.querySelector('.fireworks-container');
+  const fireworksConfig = {
+    autoresize: true,
+    opacity: 0.5,
+    acceleration: 1.05,
+    friction: 0.97,
+    gravity: 1.5,
+    particles: 50,
+    traceLength: 3,
+    traceSpeed: 10,
+    explosion: 5,
+    intensity: 100,
+    flickering: 50,
+    lineStyle: 'round',
+    hue: {
+      min: 0,
+      max: 360
+    },
+    delay: {
+      min: 30,
+      max: 60
+    },
+    rocketsPoint: {
+      min: 50,
+      max: 50
+    },
+    lineWidth: {
+      explosion: {
+        min: 1,
+        max: 3
+      },
+      trace: {
+        min: 1,
+        max: 2
+      }
+    },
+    brightness: {
+      min: 55,
+      max: 100
+    },
+    decay: {
+      min: 0.015,
+      max: 0.03
+    },
+    mouse: {
+      click: true,
+      move: false,
+      max: 10
+    },
+      sound: {
+        enabled: true,
+      files: ["https://fireworks.js.org/sounds/explosion0.mp3", "https://fireworks.js.org/sounds/explosion1.mp3",  "https://fireworks.js.org/sounds/explosion2.mp3"],
+      volume: {
+        min: 4,
+        max: 8
+      }
+    }
+      
+  };
+
+  const fireworks = new Fireworks.default(container, fireworksConfig);
     fireworks.start();
   }
   function startCountdown() {
     displayHappyNewYearMessage(); // 首先显示新年祝福信息
+    displayImages();
     startFireworks(); // 然后开始烟火效果
     clearInterval(interval); // 清除现有的倒计时
     updateCountdown(); // 立即更新倒计时
