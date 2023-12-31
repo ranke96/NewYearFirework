@@ -1,40 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Firefly Effect</title>
-  <style>
-    body {
-      margin: 0;
-      overflow: hidden;
-      background-color: black;
-    }
-    .firefly {
-      position: absolute;
-      pointer-events: none;
-      transition: opacity 1s ease-in-out, transform 2s ease-in-out, left 5s linear, top 5s linear;
-    }
-  </style>
-</head>
-<body>
-  <script>
     function getRandom(min, max) {
       return Math.random() * (max - min) + min;
     }
 
-    function createFirefly() {
+    function createFirefly(container) {
       const firefly = document.createElement('img');
       firefly.className = 'firefly';
-      firefly.src = `fire${Math.floor(getRandom(0, 6))}.png`;
+      firefly.src = `image/fire${Math.floor(getRandom(0, 6))}.png`;
 
-      const x = getRandom(-200, window.innerWidth + 200);
-      const y = getRandom(-200, window.innerHeight + 200);
+      const x = getRandom(-200, container.clientWidth + 200);
+      const y = getRandom(-200, container.clientHeight + 200);
       firefly.style.left = `${x}px`;
       firefly.style.top = `${y}px`;
-
+       firefly.style.transform = 'scale(0.1)';
       firefly.style.opacity = getRandom(0.1, 0.2);
+        
 
-      document.body.appendChild(firefly);
+      container.appendChild(firefly);
 
       setTimeout(() => {
         moveFirefly(firefly);
@@ -58,19 +39,23 @@
       firefly.style.left = `${newX}px`;
       firefly.style.top = `${newY}px`;
 
-      const scale = getRandom(0.5, 0.9);
+      const scale = getRandom(0.2, 0.3);
       firefly.style.transform = `scale(${scale})`;
 
       setTimeout(() => {
         requestAnimationFrame(() => moveFirefly(firefly));
       }, 2000); // 控制移動的速度
-
     }
 
-    const numFireflies = 30;
+    const fireflyContainer = document.getElementById('fireflyContainer');
+    const numFireflies = 100;
     for (let i = 0; i < numFireflies; i++) {
-      createFirefly();
+      createFirefly(fireflyContainer);
     }
-  </script>
-</body>
-</html>
+      
+        document.addEventListener('keydown', function(event) {
+      if (event.key === 'g' || event.key === 'G') {
+        const container = document.getElementById('fireflyContainer');
+        container.style.display = (container.style.display === 'none') ? 'block' : 'none'; // 切換顯示/隱藏
+      }
+    });

@@ -56,7 +56,18 @@
       align-items: center;
       justify-content: center;
     }
-
+    #fireflyContainer {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+        
+    }
+    .firefly {
+      position: absolute;
+      pointer-events: none;
+      transition: opacity 1s ease-in-out, transform 2s ease-in-out, left 5s linear, top 5s linear;
+    }
     /* 鼠标悬停时的样式 */
   </style>
   <link rel="stylesheet" href="css/StarrySky.css">
@@ -65,9 +76,11 @@
    <script src="js/StarrySky.js"></script>
    <script src="js/switch.js"></script>
    <script src="js/snow.js"></script>
+
 </head>
 <body>
 <audio id="audio" src="" preload="auto"></audio>
+
 <div id="twitch-player" style="display: none; position: fixed; bottom: 20px; left: 20px; z-index: 101;">
   <iframe src="https://player.twitch.tv/?channel=terrorcat7414&enableExtensions=true&muted=true&parent=ranke96.github.io&player=popout&quality=chunked&volume=1" frameborder="0" width="480" height="270" style="background-color: transparent;"></iframe>
 </div>
@@ -77,9 +90,9 @@
 </div>
 <div id="countdown"></div>
 <div class="fireworks-container"></div>  
-
-<div class="noite"><canvas id="rainCanvas"></canvas></div>
     
+<div class="noite"><canvas id="rainCanvas"></canvas></div>
+    <div id="fireflyContainer"></div>
 <div class="constelacao"></div>
 <div class="lua">
   <div class="textura"></div>
@@ -93,6 +106,7 @@
     <img src="image/city.png" alt="" />
   </div>
   <script src="js/rain.js"></script>
+<script src="js/fire.js"></script>
 <script>
   // 设置跨年的时间点
 function preloadImages() {
