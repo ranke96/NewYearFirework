@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>2024新年倒數</title>
+  <title>2025新年倒數</title>
     <style>
  .fireworks-container {
   position: absolute;
@@ -376,7 +376,7 @@ void main(void) {
 <div class="lua">
   <div class="textura"></div>
 
-    <button class="test-button" onclick=" playAudio();"></button>
+    <button class="test-button" onclick=" startCountdown(); playAudio();"></button>
 </div>
 <div class="snow-container" style="display: none;"></div>
     
@@ -387,7 +387,7 @@ void main(void) {
   <script src="js/rain.js"></script>
 <script>
   // 设置跨年的时间点
-  const newYearTime = new Date('January 1, 2024 00:00:00').getTime();
+  const newYearTime = new Date('January 1, 2025 00:00:00').getTime();
 
   // 更新倒计时和特殊效果
   const updateCountdown = () => {
@@ -432,7 +432,7 @@ void main(void) {
 
   function displayHappyNewYearMessage() {
     const happyNewYearMessage = document.createElement('div');
-    happyNewYearMessage.textContent = '2024新年快樂';
+    happyNewYearMessage.textContent = '2025新年快樂';
     happyNewYearMessage.className = 'new-year-message';
     document.body.appendChild(happyNewYearMessage);
 
