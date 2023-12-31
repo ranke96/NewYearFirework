@@ -42,3 +42,17 @@
     }
   });   
     
+document.addEventListener('DOMContentLoaded', function() {
+  const sakuraCanvas = document.getElementById('sakura');
+  sakuraCanvas.style.display = 'none'; // 隱藏 canvas
+
+  document.addEventListener('keydown', event => {
+    if (event.code === 'KeyJ') {
+      if (sakuraCanvas.style.display === 'none') {
+        sakuraCanvas.style.display = 'block'; // 顯示 canvas
+      } else {
+        sakuraCanvas.style.display = 'none'; // 隱藏 canvas
+      }
+    }
+  });
+});
