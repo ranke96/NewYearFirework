@@ -44,7 +44,7 @@
     
 document.addEventListener('DOMContentLoaded', function() {
   const sakuraCanvas = document.getElementById('sakura');
-  sakuraCanvas.style.display = 'none'; // 隱藏 canvas
+  //sakuraCanvas.style.display = 'none'; // 隱藏 canvas
 
   document.addEventListener('keydown', event => {
     if (event.code === 'KeyJ') {
