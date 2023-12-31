@@ -10,7 +10,7 @@
   left: 0;
   width: 100%;
   height: 100vh;
-  z-index: 9999; /* 確保煙火容器在最上層 */
+  z-index: 9998; /* 確保煙火容器在最上層 */
     }
     
     #countdown {
@@ -23,7 +23,7 @@
       top: 50%; /* 垂直置中 */
       left: 50%; /* 水平置中 */
       transform: translate(-50%, -50%); /* 水平和垂直置中 */
-      z-index: 9999; /* 最上層 */
+      z-index: 9998; /* 最上層 */
     }
     .new-year-message {
       font-family: 'Noto Sans TC', sans-serif; /* 使用指定字体 */
@@ -36,7 +36,7 @@
       text-align: center;
       opacity: 0;
       transition: opacity 2s, font-size 2s;
-      z-index: 9999;
+      z-index: 9998;
       color: #fff; /* 白色文字 */
     }
     .test-button {
@@ -56,7 +56,53 @@
       align-items: center;
       justify-content: center;
     }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+        z-index: 9999
+    }
 
+    .instructions {
+      background-color: rgba(0, 0, 0, 0.3); /* 修改為純黑，透明度 30% */
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+        z-index: 9999
+      
+    }
+
+    .instructions h2 {
+      margin-top: 0;
+      color: #fff; /* 指示文字顏色為白色 */
+      text-align: center; /* 讓 <h2> 元素置中 */
+    z-index: 9999
+    }
+
+    .instructions p {
+      margin-bottom: 10px;
+      color: #fff; /* 指示文字顏色為白色 */
+      text-align: left; /* 讓 <p> 元素靠左對齊 */
+    z-index: 9999
+    }
+
+    /* 添加一些自定義樣式來渲染鍵盤按鈕 */
+    .keyboard-key {
+      display: inline-block;
+      border: 1px solid #fff;
+      border-radius: 5px;
+      padding: 5px 10px;
+      margin: 0 5px;
+      font-size: 16px;
+      cursor: pointer;
+      z-index: 9999
+    }
     /* 鼠标悬停时的样式 */
   </style>
   <link rel="stylesheet" href="css/StarrySky.css">
@@ -339,6 +385,17 @@ void main(void) {
 </script>
 </head>
 <body>
+<div class="overlay" id="overlay">
+  <div class="instructions">
+    <h2>使用提示</h2>
+    <p>點擊月亮可以預覽跨年特效</p>
+    <p>開始施放煙火時點擊畫面可以指定施放位置</p><br>
+    <h2>特效切換</h2>
+    <p>按 <span class="keyboard-key">S</span> 切換下雪</p>
+    <p>按 <span class="keyboard-key">R</span> 切換下雨</p>
+    <p>按 <span class="keyboard-key">J</span> 切換櫻花語</p>
+  </div>
+</div>
 <div id="countdown"></div>
 <div class="fireworks-container"></div>  
 
@@ -358,6 +415,33 @@ void main(void) {
   </div>
   <script src="js/rain.js"></script>
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const overlay = document.getElementById('overlay');
+
+  // Function to show the overlay
+  function showOverlay() {
+    overlay.style.display = 'flex';
+  }
+
+  // Function to hide the overlay
+  function hideOverlay() {
+    overlay.style.display = 'none';
+  }
+
+  // Show overlay initially
+  showOverlay();
+
+  // Hide overlay when clicking anywhere on the overlay
+  overlay.addEventListener('click', hideOverlay);
+
+  // Hide overlay when pressing the Esc key
+  document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+      hideOverlay();
+    }
+  });
+});
+
   // 设置跨年的时间点
   const newYearTime = new Date('January 1, 2024 00:00:00').getTime();
     //'January 1, 2024 00:00:00'
